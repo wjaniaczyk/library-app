@@ -27,6 +27,16 @@ public class BookService {
         return bookRepo.findAll(Sort.by(Sort.Direction.ASC, "title"));
     }
 
+    public List<Book> getAllSorted(String sortDir, String sortParam) {
+        Sort.Direction dir;
+        if (sortDir.equalsIgnoreCase("DESC")){
+            dir = Sort.Direction.DESC;
+        } else {
+            dir = Sort.Direction.ASC;
+        }
+        return bookRepo.findAll(Sort.by(dir, sortParam));
+    }
+
     public Book getById(long id){
         return bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
@@ -48,4 +58,4 @@ public class BookService {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         bookRepo.delete(book);
     }
- }
+}
