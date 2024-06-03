@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -28,13 +29,7 @@ public class BookService {
     }
 
     public List<Book> getAllSorted(String sortDir, String sortParam) {
-        Sort.Direction dir;
-        if (sortDir.equalsIgnoreCase("DESC")){
-            dir = Sort.Direction.DESC;
-        } else {
-            dir = Sort.Direction.ASC;
-        }
-        return bookRepo.findAll(Sort.by(dir, sortParam));
+        return bookRepo.findAll(Sort.by(Sort.Direction.fromString(sortDir), sortParam));
     }
 
     public Book getById(long id){
